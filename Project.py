@@ -3,7 +3,7 @@ import re                                                 # importing the regex 
 
 def read_file():                                          # creating a function that read the external text file
     file_store = []                                       # creating a tuple to store the output of file
-    with open('New_text.txt', 'rt') as file_content:        # opening the source file under the name of file_content
+    with open('syslog.txt', 'rt') as file_content:        # opening the source file under the name of file_content
         for characters in file_content:                   # creating a loop to read each characters of file
             file_store.append(characters)                 # updating the file for each character as the loop progress
         return file_store                                 # return the updated tuple with the content of file
@@ -30,7 +30,7 @@ def line_printing(word, file_split):
     line_count = 0
     k = 1
     word_file = word+'.txt'
-    new_file=open(word_file,'w')
+    new_file=open(word_file,'a')
     for i in range(len(file_split)):
         if re.fullmatch("n", file_split[i]):
             line_count += 1
@@ -39,19 +39,20 @@ def line_printing(word, file_split):
             previous_word = file_split[i-1]
             next_word = file_split[i+1]
             current_word = file_split[i]
-            a="Occurrence number {0} was at Line number {1} : {2} {3} {4} \n".format(k, line_count+1, previous_word,
-                                                                                   current_word, next_word)
-            k+=1
-            print(a)
-            new_file.write(a)
+            new_file.write("Occurrence number {0} was at Line number {1} : {2} {3} {4} \n".format(k, line_count+1, previous_word,
+                                                                                   current_word, next_word))
+            k += 1
             ''' new_file=open(word_file, 'a') # opening the source file under the name of file_content
             new_file.write(a)
             new_file.close()'''
+    new_file.write("Total Number of Occurrence of {0} are : {1}".format(word,word_count(word,file_split)))
     new_file.close()
 
+user_input=int(input())
+for i in range(user_input):
 
-b = input()
-a = read_file()
-c = split_words(a)
-line_printing(b, c)
-z = word_count(b, c)
+    b = input()
+    a = read_file()
+    c = split_words(a)
+    line_printing(b, c)
+    word_count(b, c)
