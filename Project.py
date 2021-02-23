@@ -26,33 +26,49 @@ def word_count(word, file_split):                          # function to count n
     return count                                           # return the total no. of occurrences in file
 
 
-def line_printing(word, file_split):
-    line_count = 0
-    k = 1
-    word_file = word+'.txt'
-    new_file=open(word_file,'a')
-    for i in range(len(file_split)):
-        if re.fullmatch("n", file_split[i]):
+def line_printing(word, file_split):                       # making a func. that will print our values to the .txt files
+    line_count = 0                                         # checks the line at which current iteration is at
+    occurrence = 1
+    '''occurrence of word given 1 because this function will run only when there is a occurrence'''
+    word_file = word+'.txt'                                # this will give word file name same as the word asked for
+    new_file = open(word_file, 'a')                        # opening our newly created file under the name of new_file
+    for find in range(len(file_split)):                    # loop will run till length of array file_split
+        if re.fullmatch("n", file_split[find]):
             line_count += 1
-            file_split[i] = re.sub('n', '', str(file_split[i]))
-        if re.fullmatch(word, file_split[i], re.M | re.I):
-            previous_word = file_split[i-1]
-            next_word = file_split[i+1]
-            current_word = file_split[i]
-            new_file.write("Occurrence number {0} was at Line number {1} : {2} {3} {4} \n".format(k, line_count+1, previous_word,
-                                                                                   current_word, next_word))
-            k += 1
-            ''' new_file=open(word_file, 'a') # opening the source file under the name of file_content
-            new_file.write(a)
-            new_file.close()'''
-    new_file.write("Total Number of Occurrence of {0} are : {1}".format(word,word_count(word,file_split)))
+            file_split[find] = re.sub('n', '', str(file_split[find]))
+        '''The above statement from if will check for the exact single character n which i designated for new line as 
+         soon as it find that "n" line_count increases and afterward that n is deleted as it is not an actual character
+         of the file rather just a new line , so before operating for user input these n's are deleted'''
+        if re.fullmatch(word, file_split[find], re.M | re.I):  # matching the exact word in file_split without case
+            previous_word = file_split[find-1]                 # arr[i-1] is the element behind the current one (word)
+            next_word = file_split[find+1]                     # arr[i+1] is the element after the current word
+            current_word = file_split[find]                    # arr[i] is the current word
+            new_file.write("Occurrence number {0} was at Line number {1} : {2} {3} {4} \n".format(occurrence,
+                                                                                                  line_count+1,
+                                                                                                  previous_word,
+                                                                                                  current_word,
+                                                                                                  next_word))
+            ''' Writing into the newly created file with some formatting for a user friendly interface like the word no 
+            line number ,etc'''
+            occurrence += 1                                    # going onto the next occurrence
+    new_file.write("Total Number of Occurrence of {0} are : {1}".format(word, word_count(word, file_split)))
     new_file.close()
 
-user_input=int(input())
-for i in range(user_input):
 
-    b = input()
-    a = read_file()
-    c = split_words(a)
-    line_printing(b, c)
-    word_count(b, c)
+try:
+    no_of_words = int(input("Enter the number of words you want to find : "))
+    for finding_words in range(no_of_words):
+        find_words = input("Enter word number {0} you want to find : ".format(finding_words+1))
+        base_file = read_file()
+        individual_words_tuple = split_words(base_file)
+        z = word_count(find_words, individual_words_tuple)
+        if z != 0:
+            line_printing(find_words, individual_words_tuple)
+            print('Your word occurrence list was successfully saved at root folder named as "{0}.txt"'
+                  .format(find_words))
+        else:
+            print("No Words found, So no file was created!")
+except ValueError:
+    print("Oops! you were supposed to enter a number!!!")
+finally:
+    print("Thanks for using the program")
