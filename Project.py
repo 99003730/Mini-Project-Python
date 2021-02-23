@@ -35,7 +35,7 @@ def line_printing(word, file_split):                       # making a func. that
     for find in range(len(file_split)):                    # loop will run till length of array file_split
         if re.fullmatch("n", file_split[find]):
             line_count += 1
-            file_split[find] = re.sub('n', '', str(file_split[find]))
+            file_split[find] = re.sub("n", ' ', str(file_split[find]))
         '''The above statement from if will check for the exact single character n which i designated for new line as 
          soon as it find that "n" line_count increases and afterward that n is deleted as it is not an actual character
          of the file rather just a new line , so before operating for user input these n's are deleted'''
@@ -43,32 +43,49 @@ def line_printing(word, file_split):                       # making a func. that
             previous_word = file_split[find-1]                 # arr[i-1] is the element behind the current one (word)
             next_word = file_split[find+1]                     # arr[i+1] is the element after the current word
             current_word = file_split[find]                    # arr[i] is the current word
-            new_file.write("Occurrence number {0} was at Line number {1} : {2} {3} {4} \n".format(occurrence,
-                                                                                                  line_count+1,
-                                                                                                  previous_word,
-                                                                                                  current_word,
-                                                                                                  next_word))
+            if next_word != 'n':
+                new_file.write("Occurrence number {0} was at Line number {1} : {2} {3} {4} \n".format(occurrence,
+                                                                                                      line_count+1,
+                                                                                                      previous_word,
+                                                                                                      current_word,
+                                                                                                      next_word))
+                '''if the ending word is not 'n' i.e new line print as it is'''
+            else:
+                new_file.write("Occurrence number {0} was at Line number {1} : {2} {3} {4} \n".format(occurrence,
+                                                                                                      line_count + 1,
+                                                                                                      previous_word,
+                                                                                                      current_word,
+                                                                                                      ''))
+                '''if the ending word is 'n' i.e new line print nothing at end'''
             ''' Writing into the newly created file with some formatting for a user friendly interface like the word no 
             line number ,etc'''
             occurrence += 1                                    # going onto the next occurrence
-    new_file.write("Total Number of Occurrence of {0} are : {1}".format(word, word_count(word, file_split)))
-    new_file.close()
+    new_file.write("Total Number of Occurrence of the word '{0}' are : {1}".format(word, word_count(word, file_split)))
+    '''above code is to write the total number of counts of the given word in the text file and formatted for neatness
+     of code  '''
+    new_file.close()                                           # close the new text file
+
+    '''//////////////////////////////MAIN PROGRAM STARTS FROM HERE/////////////////////////////////////////////////'''
 
 
-try:
+try:                                                           # try and except code for error redundancy
     no_of_words = int(input("Enter the number of words you want to find : "))
-    for finding_words in range(no_of_words):
+    '''above code is to take the number of words that are to be found'''
+    for finding_words in range(no_of_words):                   # the loop will run for the number of words to be found
         find_words = input("Enter word number {0} you want to find : ".format(finding_words+1))
-        base_file = read_file()
-        individual_words_tuple = split_words(base_file)
-        z = word_count(find_words, individual_words_tuple)
-        if z != 0:
-            line_printing(find_words, individual_words_tuple)
+        '''above code is for taking the word to be found per iteration'''
+        base_file = read_file()                                # calling read file function and storing into base_file
+        individual_words_tuple = split_words(base_file)        # calling split_words function to split text into words
+        count_words = word_count(find_words, individual_words_tuple)
+        '''above function is to call function word_call to count number and save it toi new variable'''
+        if count_words != 0:                                   # case will not run if there were no words found
+            line_printing(find_words, individual_words_tuple)  # calling function for writing the occurrence in file
             print('Your word occurrence list was successfully saved at root folder named as "{0}.txt"'
-                  .format(find_words))
+                  .format(find_words))                         # confirmation to user that the code was success
         else:
-            print("No Words found, So no file was created!")
-except ValueError:
-    print("Oops! you were supposed to enter a number!!!")
-finally:
-    print("Thanks for using the program")
+            print("No Words found, So no file was created!")   # if no matching words were found this would execute
+except ValueError:                                             # if user enter string in place of integer
+    print("Oops! you were supposed to enter a number!!!")      # message to user the committed a value error
+finally:                                                       # this section will run no matter what
+    print("Thanks for using the program")                      # thank you message
+'''//////////////////////////////////////////////////CODE END///////////////////////////////////////////////////////'''
