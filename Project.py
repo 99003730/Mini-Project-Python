@@ -227,8 +227,6 @@ try:                                # try and except code for error redundancy
 except ValueError:                   # if user enter string in place of integer
     print("Oops! you were supposed to enter a number!!!")
     '''message to user the committed a value error'''
-except ResourceWarning:
-    print("Don't Use [] {} () here we cant find that they are not WORDS")
 finally:                               # this section will run no matter what
     print("############### THANK YOU FOR USING THE PROGRAM ############## \n")
     '''thank you message'''
