@@ -77,7 +77,7 @@ class WordSearch(SplitWord):
          there is a occurrence'''
         word_file = self.word+'.txt'
         '''this will give word file name same as the word asked for'''
-        new_file = open(word_file, 'a')
+        new_file = open(word_file, 'w')
         '''opening newly created file under the name of new_file'''
         for find in range(len(self.file_split)):
             '''loop will run till length of array file_split'''
