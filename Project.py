@@ -198,9 +198,10 @@ try:                                # try and except code for error redundancy
                     find_words[error_search] == "'" or
                     find_words[error_search] == '"' or
                     find_words[error_search] == '+' or
-                    find_words[error_search] == '=' or find_words[error_search] == '/'):
-                """If user tries to enter special characters and
-                 pass them as words"""
+                    find_words[error_search] == '=' or
+                    find_words[error_search] == '/'):
+                """If user tries to enter special characters and pass them as words
+                throw an exception and exit the program"""
                 raise Exception("====================="
                                 "  WE DON'T SEARCH FOR BRACKETS OR SPECIAL "
                                 "CHARACTERS AS THEY ARE NOT WORDS!!!!  "
