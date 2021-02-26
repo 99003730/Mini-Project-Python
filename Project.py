@@ -218,15 +218,17 @@ try:                                # try and except code for error redundancy
             word_search.line_printing(find_words, individual_words_tuple)
             '''calling function for writing the occurrence in file'''
             print('Your word occurrence list was successfully saved at root'
-                  ' folder named as "{0}.txt"'
+                  ' folder named as "{0}.txt\n"'
                   .format(find_words))
             '''confirmation to user that the code was success'''
         else:
-            print("No Words found, So no file was created!")
+            print("No Words found, So no file was created!\n")
             '''if no matching words were found this would execute'''
 except ValueError:                   # if user enter string in place of integer
-    print("Oops! you were supposed to enter a number!!!")
+    print("Oops! you were supposed to enter a number!!!\n")
     '''message to user the committed a value error'''
+except IndexError:
+    print('Type a word we CANNOT SEARCH FOR "NOTHING"!!!!!\n')
 finally:                               # this section will run no matter what
     print("############### THANK YOU FOR USING THE PROGRAM ############## \n")
     '''thank you message'''
