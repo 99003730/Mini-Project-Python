@@ -157,7 +157,7 @@ try:                                # try and except code for error redundancy
     no_of_words = int(input("Enter the number of words you want to find : \n"))
     '''above code is to take the number of words that are to be found'''
     if no_of_words <= 0:  # if user tries to enter -ve numbers exit
-        raise Exception("==========================================="
+        raise Exception("======================================="
                         "  POSITIVE NUMBERS ONLY PLEASE!!!!  "
                         "============================================")
     print("Remember to enter exact letters words license and licenses"
@@ -167,13 +167,44 @@ try:                                # try and except code for error redundancy
         find_words = input("Enter word number {0} you want to find : "
                            .format(finding_words+1))
         '''above code is for taking the word to be found per iteration'''
-        if re.match(r"[\[\]\{\}\(\)@#$%^&*-_=;:+/.]", find_words):
-            """If user tries to enter special characters and
-             pass them as words"""
-            raise Exception("========================"
-                            "  WE DON'T SEARCH FOR BRACKETS OR SPECIAL "
-                            "CHARACTERS AS THEY ARE NOT WORDS!!!!  "
-                            "===================================")
+        for error_search in range(len(find_words)):
+            if (find_words[error_search] == '[' or
+                    find_words[error_search] == ']' or
+                    find_words[error_search] == '(' or
+                    find_words[error_search] == ')' or
+                    find_words[error_search] == '{' or
+                    find_words[error_search] == '}' or
+                    find_words[error_search] == '!' or
+                    find_words[error_search] == '@' or
+                    find_words[error_search] == '#' or
+                    find_words[error_search] == '$' or
+                    find_words[error_search] == '%' or
+                    find_words[error_search] == '^' or
+                    find_words[error_search] == '&' or
+                    find_words[error_search] == '*' or
+                    find_words[error_search] == '_' or
+                    find_words[error_search] == '-' or
+                    find_words[error_search] == '\\' or
+                    find_words[error_search] == ':' or
+                    find_words[error_search] == ';' or
+                    find_words[error_search] == '|' or
+                    find_words[error_search] == ',' or
+                    find_words[error_search] == '.' or
+                    find_words[error_search] == '`' or
+                    find_words[error_search] == '~' or
+                    find_words[error_search] == '?' or
+                    find_words[error_search] == '<' or
+                    find_words[error_search] == '>' or
+                    find_words[error_search] == "'" or
+                    find_words[error_search] == '"' or
+                    find_words[error_search] == '+' or
+                    find_words[error_search] == '=' or find_words[error_search] == '/'):
+                """If user tries to enter special characters and
+                 pass them as words"""
+                raise Exception("====================="
+                                "  WE DON'T SEARCH FOR BRACKETS OR SPECIAL "
+                                "CHARACTERS AS THEY ARE NOT WORDS!!!!  "
+                                "===================================")
         base_file = read_file()
         '''calling read file function and storing into base_file'''
         individual_words_tuple = word_search.split_words(base_file)
